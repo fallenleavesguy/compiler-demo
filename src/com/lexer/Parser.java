@@ -2,17 +2,29 @@ package com.lexer;
 
 public class Parser {
     Lexer input;
-    Token lookahead;
-    public Parser(Lexer input) {
+    Token[] lookahead;
+    int k;
+    int p = 0;
+
+    public Parser(Lexer input, int k) {
         this.input = input;
-        this.lookahead = input.nextToken();
+        this.k = k;
+        this.lookahead = new Token[k];
+        for (int i=1; i<=k; i++) consume();
     }
     public void match(int x) {
-        if (lookahead.type == x) consume();
+        if (LA(1) == x) consume();
         else throw new Error("expecting " + input.getTokenName(x) +
-            "; found " + lookahead);
+            "; found " + LT(1));
     }
     public void consume() {
-        lookahead = input.nextToken();
+        lookahead[p] = input.nextToken();
+        p = (p+1) % k;
+    }
+    public Token LT(int i) {
+        return lookahead[(p+i-1) % k];
+    }
+    public int LA(int i) {
+        return LT(i).type;
     }
 }
