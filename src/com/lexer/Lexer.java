@@ -22,8 +22,8 @@ public abstract class Lexer {
         if ( p >= input.length()) c = EOF;
         else c = input.charAt(p);
     }
-    public void match(char x) {
-        if (c == x) consume();
-        else throw new Error("expecting " +x+ "; found " + c);
-    }
+//    public void match(char x) {
+//        if (c == x) consume();
+//        else throw new Error("expecting " +x+ "; found " + c);
+//    }
 }
